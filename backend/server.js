@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import crypto from "crypto"
 import bcrypt from "bcrypt"
 
-const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/final-project";
+const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/final";
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = Promise;
 
@@ -66,7 +66,7 @@ app.post('/register', async (req, res) => {
   }catch (error){
     res.status(400).json({
       success: false,
-      response: error
+      response: error.message
     });
   }
 });

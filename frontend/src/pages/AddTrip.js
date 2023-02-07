@@ -4,7 +4,7 @@ import user from '../reducers/user';
 import { API_URL } from '../utils/utils'
 import { useNavigate } from 'react-router-dom';
 
-const addtrip = () => {
+const Addtrip = () => {
     const dispatch = useDispatch();
     const accessToken = useSelector((store) => store.user.accessToken);
     const navigate = useNavigate();
@@ -20,4 +20,4 @@ const addtrip = () => {
   );
 }
 
-export default addtrip;
+export default Addtrip;
