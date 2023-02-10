@@ -19,7 +19,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-
+//Schema for user
 const UserSchema = new mongoose.Schema({
   username: {
     type: String, 
@@ -36,6 +36,21 @@ const UserSchema = new mongoose.Schema({
 });
 
 const User = mongoose.model('User', UserSchema);
+
+//Schema for planned trip
+const TripSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true
+  },
+  date: {
+    type: Date,
+    required: true
+  },
+
+})
+
+const Trip = mongoose.model('Trip', TripSchema);
 
 // Start defining your routes here
 app.get("/", (req, res) => {
@@ -71,7 +86,7 @@ app.post('/register', async (req, res) => {
   }
 });
 
-//Login
+//Login and startpage
 app.post('/login', async (req, res) =>{
   const { username, password } = req.body;
 
@@ -121,11 +136,16 @@ const authenticateUser = async (req, res, next) => {
   }
 };
 
-//app.get("/addtrip", authenticateUser);
-app.get("/addtrip", (req, res)=> {
+//Endpoint for adding a new trip
+app.post("/addtrip", (req, res)=> {
   res.status(200).json({success: true, response: "Where to next?"});
 });
 
+
+//Endpoint for saved trips
+app.get('/plannedtrip', (req, res)=> {
+  res.status(200).json({success: true, response: "My next trip"});
+})
 
 // Start the server
 app.listen(port, () => {
@@ -136,82 +156,3 @@ app.listen(port, () => {
 
 
 
-// FIRST TRY
-
-
-// from Van
-/*const User = mongoose.model('User', {
-  username: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  password:{
-    type: String,
-    required: true
-  },
-  accessToken: {
-    type: String,
-    default: ()=> crypto.randomBytes(128).toString('hex')
-  }
- });
-*/
-
-
-
- /*const authenticateUser = async (req, res, next) => {
-   const user = await User.findOne ({accessToken: req.header('Authorization')});
-   if(user){
-    req.user = user;
-    next();
-   }else {
-    res.status(401).json({loggedOut: true});
-   }
- }
-*/
-
-//Start and login page
-/*
-app.post('/users', async(req,res) => {
-  try {
-   const {username, password} =req.body;
-   const user = new User ({username, password: bcrypt.hashSync(password)});
-   user.save();
-   res.status(201).json({id: user.id, accessToken: user.accessToken});
-  } catch (err) {
-    res.status(400).json({message: 'Could not create user', errors: err.errors});
-  }
- });
-
-
-//Add trip page
-app.get('/addtrip', authenticateUser);
-app.get('/addtrip', (req, res) =>{
-  res.json({secret:'Hey traveler where to next?'})
-});
-
-/Checks that the user exists and that the password matches
-app.post('/sessions', async(req, res) => {
-  const user = await User.findOne({username: req.body.username});
-  if(user && bcrypt.compareSync(req.body.password , user.password)){
-    res.json({userId:user._id, accessToken:user.accessToken});
-  }else{
-    res.json({notFound: true})
-  }
-});
-//Add trip page
-/*app.get('/addtrip', authenticateUser);
-app.get("/addtrip", (req, res) => {
-  const secret = "Hi traveler, where to next?"
-  try{
-    res.status(200).json({
-      success: true,
-      secret,
-    });
-  } catch(error){
-    res.status(401).json({
-      success: false,
-      response: "Access denied",
-    });
-  }
-})*/

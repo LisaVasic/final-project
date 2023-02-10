@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import AddTrip from './pages/AddTrip';
+import PlannedTrip from './pages/PlannedTrip';
 import { Provider } from 'react-redux';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import user from './reducers/user';
@@ -21,6 +22,7 @@ export const App = () => {
         <Route path='/login' element={<Login/>}></Route>
         <Route path='/register' element={<Register/>}></Route>
         <Route path='/addtrip' element={<AddTrip/>}></Route>
+        <Route path='/plannedtrip' element={<PlannedTrip/>}></Route>
     </Routes>
     </BrowserRouter>
     </Provider>
