@@ -1,9 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const user = createSlice ({
+const trip = createSlice ({
     name: 'trip',
     initialState: {
-        pages: [],
+        title: null,
+        date:null,
+        //pages: [],
         isLoading: false,
         error: null,
     },
@@ -14,8 +16,8 @@ const user = createSlice ({
         setDate: (store, action) => {
             store.date = action.payload
         },
-        setCountdown: (store, action) => {
-            store.countdown = action.payload
-        }
     }    
 });
+
+
+export default trip;

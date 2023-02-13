@@ -136,16 +136,18 @@ const authenticateUser = async (req, res, next) => {
   }
 };
 
-//Endpoint for adding a new trip
+//Endpoint for adding and saving a new trip
 app.post("/addtrip", (req, res)=> {
-  res.status(200).json({success: true, response: "Where to next?"});
+  const trip = new Trip({
+    title: req.body.title,
+    date: req.body.date
+  });
+
+  trip.save()
+    .then(() => res.status(200).json({ success: true, response: "Trip added successfully" }))
+    .catch(error => res.status(400).json({ success: false, error: error.message }));
 });
 
-
-//Endpoint for saved trips
-app.get('/plannedtrip', (req, res)=> {
-  res.status(200).json({success: true, response: "My next trip"});
-})
 
 // Start the server
 app.listen(port, () => {
